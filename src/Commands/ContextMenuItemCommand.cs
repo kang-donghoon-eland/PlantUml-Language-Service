@@ -96,7 +96,7 @@ namespace PlantUmlLanguageService.Commands
                             projectItem.Save();
                         }
                         catch { }
-                        ServiceProvider.PreviewFileContent(projectItem.FileNames[1]);
+                        ServiceProvider.PreviewFileContent(projectItem.FileNames[1], this.package);
                     }
                 }
             }

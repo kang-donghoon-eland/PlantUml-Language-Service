@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace PlantUmlLanguageService
 {
@@ -43,14 +44,17 @@ namespace PlantUmlLanguageService
             return textStreamReader.ReadToEnd();
         }
 
-        internal static void PreviewFileContent(this IServiceProvider serviceprovider, string path)
+        internal static void PreviewFileContent(this IServiceProvider serviceprovider, string path, Package package)
         {
-            Global.BaseUrl = "https://www.plantuml.com";
+            VSPackage vSPackage = package as VSPackage;
+
+            Global.BaseUrl = string.IsNullOrWhiteSpace(vSPackage.GetOptionUrl)?"https://www.plantuml.com": vSPackage.GetOptionUrl;
             if (Constants.FileTypes.Contains($".{path.Split('.').Last()}"))
             {
                 Warnings.Clear();
                 CurrentFilePath = path;
                 CurrentFile = Path.GetFileNameWithoutExtension(path);
+
                 DiagramUrl =
                     DiagramService.GetImageUrlForSource(
                         MacroService.CheckImports(File.ReadAllLines(path).IncludeFiles()),

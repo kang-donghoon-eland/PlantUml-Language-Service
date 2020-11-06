@@ -75,7 +75,7 @@ namespace PlantUmlLanguageService.Commands
             dte = (EnvDTE.DTE)ServiceProvider.GetService(typeof(EnvDTE.DTE));
             activeDocument = dte.ActiveDocument;
             activeDocument.Save();
-            ServiceProvider.PreviewFileContent(activeDocument.FullName);
+            ServiceProvider.PreviewFileContent(activeDocument.FullName, this.package);
         }
     }
 }

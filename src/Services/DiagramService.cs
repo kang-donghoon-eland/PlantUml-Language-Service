@@ -1,4 +1,5 @@
-﻿using PlantUmlLanguageService.Control;
+﻿using Microsoft.VisualStudio.Shell;
+using PlantUmlLanguageService.Control;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -16,7 +17,7 @@ namespace PlantUmlLanguageService.Services
         /// <summary>
         /// The plant uml URL format
         /// </summary>
-        private const string PlantUmlUrlFormat = "{2}/plantuml/{0}/{1}";
+        private const string PlantUmlUrlFormat = "{2}/{0}/{1}";
 
         /// <summary>
         /// Gets the image URL for source.
@@ -251,7 +252,7 @@ namespace PlantUmlLanguageService.Services
             {
                 using (DeflateStream gzip = new DeflateStream(zipped, CompressionMode.Compress))
                 {
-                    using (StreamWriter writer = new StreamWriter(gzip, System.Text.Encoding.UTF8))
+                    using (StreamWriter writer = new StreamWriter(gzip))
                     {
                         writer.Write(stringToZip);
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using PlantUmlLanguageService.Commands;
+using PlantUmlLanguageService.Options;
 //using PlantUmlLanguageService.Intellisense;
 using PlantUmlLanguageService.ToolWindow;
 using Task = System.Threading.Tasks.Task;
@@ -27,6 +28,7 @@ namespace PlantUmlLanguageService
     [Guid(VSPackage.PackageGuidString)]
     [ProvideToolWindow(typeof(DiagramPreviewToolWindow),Style =VsDockStyle.MDI)]
     [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideOptionPage(typeof(PlantUmlOptions), "PlantUmlLanguageService", "PlantUmlLanguage Options", 0, 0, true) ]
     public sealed class VSPackage : AsyncPackage
     {
         public const string PackageGuidString = "c097b9f6-5f54-40b4-aa9f-5fe227fc3bb1"; //"ff4f80de-da63-4ca8-9f09-acf70fdc5cb5";
@@ -84,5 +86,22 @@ namespace PlantUmlLanguageService
         //    DiagramPreviewToolWindowCommand.Initialize(this);
         //}
 
+        public string GetOptionUrl
+        {
+            get
+            {
+                PlantUmlOptions page = (PlantUmlOptions)GetDialogPage(typeof(PlantUmlOptions));
+                return page.PlantUmlServiceUrl;
+            }
+        }
+
+        public string GetPdfFileName
+        {
+            get
+            {
+                PlantUmlOptions page = (PlantUmlOptions)GetDialogPage(typeof(PlantUmlOptions));
+                return page.PlantUmlServiceUrl;
+            }
+        }
     }
 }
